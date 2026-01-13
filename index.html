@@ -8,6 +8,7 @@
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
+/* Custom Animations */
 @keyframes float {
 0%, 100% { transform: translateY(0px) rotate(0deg); }
 50% { transform: translateY(-20px) rotate(1deg); }
@@ -18,10 +19,21 @@
 50% { opacity: 0.6; transform: scale(1.1); }
 }
 
-.logo-container { perspective: 1000px; }
-.premium-logo { transition: transform 0.2s ease-out, filter 0.3s ease; will-change: transform; }
-.logo-float { animation: float 6s ease-in-out infinite; }
+/* --- LOGO ENHANCEMENTS --- */
+.logo-container {
+perspective: 1000px;
+}
 
+.premium-logo {
+transition: transform 0.2s ease-out, filter 0.3s ease;
+will-change: transform;
+}
+
+.logo-float {
+animation: float 6s ease-in-out infinite;
+}
+
+/* --- CONVEYOR BELT ANIMATION --- */
 @keyframes scroll {
 0% { transform: translateX(0); }
 100% { transform: translateX(-50%); }
@@ -31,42 +43,92 @@
 display: flex;
 width: fit-content;
 animation: scroll 30s linear infinite;
+will-change: transform;
 }
 
 .product-item {
 flex: 0 0 auto;
-width: 130px;
+width: 130px; 
 margin: 0 10px;
 transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+position: relative;
+z-index: 1;
 }
 
 @media (min-width: 768px) {
-.product-item { width: 200px; margin: 0 30px; }
+.product-item {
+width: 200px;
+margin: 0 30px;
+}
 }
 
 .product-item img {
 width: 100%;
 height: 120px;
 object-fit: contain;
+filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
 }
 
 @media (min-width: 768px) {
 .product-item img { height: 150px; }
 }
 
+/* --- ENHANCED HOVER SIZE --- */
+.product-item:hover, .product-item:active {
+transform: scale(1.3) translateY(-20px); 
+z-index: 50;
+}
+
+@media (min-width: 768px) {
 .product-item:hover {
-transform: scale(1.3) translateY(-20px);
+transform: scale(1.5) translateY(-30px);
+}
 }
 
 #bg-canvas {
 position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
+top: 0; left: 0;
+width: 100%; height: 100%;
 z-index: -1;
-background-color: #fff;
+pointer-events: none;
+background-color: #FFFFFF;
 }
+
+/* --- MOBILE MENU & BLUR FIX --- */
+#main-content-wrapper {
+transition: filter 0.4s ease, transform 0.4s ease;
+}
+
+body.menu-open #main-content-wrapper {
+filter: blur(15px);
+transform: scale(0.95);
+}
+
+#mobile-menu {
+transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+transform: translateY(-100%);
+opacity: 0;
+visibility: hidden;
+padding-top: 80px; 
+}
+
+#mobile-menu.active {
+transform: translateY(0);
+opacity: 1;
+visibility: visible;
+}
+
+.trust-card h3 {
+font-size: 2rem; 
+font-weight: 800;
+color: #F68B2C;
+text-shadow: 0 0 15px rgba(246, 139, 44, 0.3);
+}
+@media (min-width: 768px) {
+.trust-card h3 { font-size: 2.5rem; }
+}
+
+.overflow-x-clip { overflow-x: clip; }
 </style>
 
 <script>
@@ -76,6 +138,7 @@ extend: {
 colors: {
 brandOrange: '#F68B2C',
 brandDark: '#FFFFFF',
+brandGray: '#F9F9F9',
 brandLight: '#1C1C1C'
 }
 }
@@ -86,66 +149,246 @@ brandLight: '#1C1C1C'
 
 <body class="bg-brandDark text-brandLight overflow-x-hidden antialiased">
 
+<canvas id="bg-canvas"></canvas>
+
 <nav class="fixed top-0 w-full bg-white/80 backdrop-blur-md z-[300] border-b border-black/5">
-<div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
-<a href="index.html" class="flex items-center gap-3">
-<img src="./assets/images/logo/PRINT MARKING LOGO.png" class="h-9">
-<span class="text-xl font-bold">PRINT <span class="text-brandOrange">MARKING</span></span>
+<div class="max-w-7xl mx-auto px-4 md:px-6 py-5 flex justify-between items-center relative z-[310]">
+<a href="index.html" class="flex items-center gap-2 md:gap-3 group">
+<img src="assets/images/logo/PRINT MARKING LOGO.png" alt="Print Marking Logo" class="h-9 md:h-10 w-auto transition-transform duration-500 group-hover:rotate-[360deg]">
+<span class="text-lg md:text-xl font-bold tracking-tight">PRINT <span class="text-brandOrange">MARKING</span></span>
 </a>
+
+<div class="hidden md:flex gap-8 text-sm uppercase tracking-widest font-bold">
+<a href="index.html" class="text-brandOrange">Home</a>
+<a href="about.html" class="hover:text-brandOrange transition-colors">About</a>
+<a href="gallery.html" class="hover:text-brandOrange transition-colors">Gallery</a>
+<a href="contact.html" class="hover:text-brandOrange transition-colors">Contact</a>
+</div>
+
+<button id="menu-btn" class="md:hidden text-brandLight focus:outline-none p-2 relative z-[320]">
+<svg id="menu-icon" class="w-8 h-8 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path id="menu-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+</svg>
+</button>
+</div>
+
+<div id="mobile-menu" class="fixed inset-0 bg-white/90 backdrop-blur-3xl z-[250] flex flex-col items-center justify-start pt-32 gap-10 md:hidden">
+<a href="index.html" class="text-3xl font-black text-brandOrange uppercase tracking-widest">Home</a>
+<a href="about.html" class="text-3xl font-black hover:text-brandOrange uppercase tracking-widest transition-colors">About</a>
+<a href="gallery.html" class="text-3xl font-black hover:text-brandOrange uppercase tracking-widest transition-colors">Gallery</a>
+<a href="contact.html" class="text-3xl font-black hover:text-brandOrange uppercase tracking-widest transition-colors">Contact</a>
 </div>
 </nav>
 
-<section class="pt-40 pb-20">
-<div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-
-<div>
-<img src="./assets/images/logo/PRINT MARKEING TITLE.png" class="mb-6 max-w-xs">
-<h1 class="text-6xl font-black mb-6">Corporate Printing <span class="text-brandOrange">& Gifting</span></h1>
-</div>
-
-<div class="flex justify-center logo-container">
-<img src="./assets/images/logo/PRINT MARKING LOGO.png" class="premium-logo w-[420px]">
-</div>
-
-</div>
-</section>
-
-<section class="py-16 overflow-hidden">
-<div class="conveyor-belt">
-
-<div class="product-item"><img src="./assets/images/pens/pen-1.jpg"></div>
-<div class="product-item"><img src="./assets/images/pens/pen-10.jpg"></div>
-<div class="product-item"><img src="./assets/images/pens/pen-11.jpg"></div>
-<div class="product-item"><img src="./assets/images/pens/pen-12.jpg"></div>
-
-<div class="product-item"><img src="./assets/images/pens/pen-1.jpg"></div>
-<div class="product-item"><img src="./assets/images/pens/pen-10.jpg"></div>
-<div class="product-item"><img src="./assets/images/pens/pen-11.jpg"></div>
-<div class="product-item"><img src="./assets/images/pens/pen-12.jpg"></div>
-
-</div>
-</section>
-
-<section class="py-20">
-<div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-
-<div>
-<h2 class="text-4xl font-extrabold mb-4">Why <span class="text-brandOrange">Print Marking?</span></h2>
-<p class="text-lg">
-Print Marking provides complete corporate gifting and printing solutions with focus on quality and delivery.
+<div id="main-content-wrapper">
+<section class="pt-32 md:pt-48 pb-16 relative">
+<div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+<div class="z-10 text-center md:text-left order-last md:order-first">
+<img src="assets/images/logo/PRINT MARKEING TITLE.png" alt="Print Marking" class="mb-4 md:mb-6 max-w-[160px] md:max-w-xs mx-auto md:mx-0 drop-shadow-lg">
+<h1 class="text-4xl md:text-7xl font-black leading-tight mb-4 md:mb-6 tracking-tight">
+Corporate Printing <br>
+<span class="text-brandOrange">& Gifting</span>
+</h1>
+<p class="text-base md:text-lg text-gray-900 mb-8 md:mb-10 max-w-lg mx-auto md:mx-0 leading-relaxed font-medium">
+Premium corporate gifting and professional branding solutions trusted by India's top businesses. We bring your brand to life.
 </p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+<a href="gallery.html" class="bg-brandOrange text-white px-8 py-4 rounded-full font-black hover:bg-black transition-all transform hover:-translate-y-1 shadow-lg shadow-brandOrange/40 text-center uppercase tracking-tighter text-sm md:text-base">
+Explore Products
+</a>
+<a href="contact.html" class="border-2 border-black/10 px-8 py-4 rounded-full font-bold hover:border-brandOrange hover:text-brandOrange transition-all text-center uppercase tracking-tighter text-sm md:text-base">
+Contact Us
+</a>
 </div>
-
-<div>
-<img src="./assets/images/logo/PRINT MARKing card.jpg" class="rounded-xl shadow-xl">
 </div>
-
+<div class="flex justify-center relative logo-container mb-8 md:mb-0" id="hero-logo-trigger">
+<div class="logo-float relative">
+<img src="assets/images/logo/PRINT MARKING LOGO.png" alt="Print Marking" id="hero-logo-main" class="premium-logo w-40 md:w-[450px] filter drop-shadow-[0_0_20px_rgba(246,139,44,0.3)]">
+</div>
+</div>
 </div>
 </section>
 
-<footer class="bg-white py-12 text-center text-gray-400 text-sm">
+<section class="py-12 md:py-12 overflow-x-clip relative">
+<div class="absolute inset-y-0 left-0 w-12 md:w-32 bg-gradient-to-r from-white via-white/80 to-transparent z-20 pointer-events-none"></div>
+<div class="absolute inset-y-0 right-0 w-12 md:w-32 bg-gradient-to-l from-white via-white/80 to-transparent z-20 pointer-events-none"></div>
+
+<div class="conveyor-belt">
+<div class="product-item"><img src="assets/images/pens/pen-1.jpg" alt="Pen"></div>
+<div class="product-item"><img src="assets/images/pens/pen-2.jpg" alt="Pen"></div>
+<div class="product-item"><img src="assets/images/pens/pen-3.jpg" alt="Pen"></div>
+<div class="product-item"><img src="assets/images/pens/pen-4.jpg" alt="Pen"></div>
+<div class="product-item"><img src="assets/images/pens/pen-5.jpg" alt="Pen"></div>
+<div class="product-item"><img src="assets/images/pens/pen-6.jpg" alt="Pen"></div>
+<div class="product-item"><img src="assets/images/pens/pen-7.jpg" alt="Pen"></div>
+<div class="product-item"><img src="assets/images/pens/pen-8.jpg" alt="Pen"></div>
+<div class="product-item"><img src="assets/images/pens/pen-9.jpg" alt="Pen"></div>
+<div class="product-item"><img src="assets/images/pens/pen-10.jpg" alt="Pen"></div>
+<div class="product-item"><img src="assets/images/pens/pen-1.jpg" alt="Pen"></div>
+<div class="product-item"><img src="assets/images/pens/pen-2.jpg" alt="Pen"></div>
+<div class="product-item"><img src="assets/images/pens/pen-3.jpg" alt="Pen"></div>
+<div class="product-item"><img src="assets/images/pens/pen-4.jpg" alt="Pen"></div>
+<div class="product-item"><img src="assets/images/pens/pen-5.jpg" alt="Pen"></div>
+</div>
+</section>
+
+<section class="py-16 md:py-20 bg-gray-50/50 backdrop-blur-sm border-y border-black/5">
+<div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12 text-center">
+<div class="trust-card p-8 rounded-3xl bg-white border border-black/5 hover:border-brandOrange/50 hover:shadow-xl transition-all">
+<h3>10+ Years</h3>
+<p class="text-gray-500 mt-2 uppercase tracking-widest font-bold text-xs">Industry Leadership</p>
+</div>
+<div class="trust-card p-8 rounded-3xl bg-white border border-black/5 hover:border-brandOrange/50 hover:shadow-xl transition-all">
+<h3>1000+</h3>
+<p class="text-gray-500 mt-2 uppercase tracking-widest font-bold text-xs">Happy Clients</p>
+</div>
+<div class="trust-card p-8 rounded-3xl bg-white border border-black/5 hover:border-brandOrange/50 hover:shadow-xl transition-all">
+<h3>Bulk Specialist</h3>
+<p class="text-gray-500 mt-2 uppercase tracking-widest font-bold text-xs">Scale & Precision</p>
+</div>
+</div>
+</section>
+
+<section class="py-16 md:py-24 relative overflow-hidden">
+<div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+<div class="text-center md:text-left">
+<h2 class="text-3xl md:text-4xl font-extrabold mb-4">Why <span class="text-brandOrange">Print Marking?</span></h2>
+<p class="text-base md:text-lg text-gray-900 mb-6 leading-relaxed font-medium">
+Print Marking provides complete corporate gifting and printing solutions with a focus on quality, customization, and timely delivery. We help brands stand out through professionally designed, high-impact printed products.
+</p>
+<div class="flex items-center justify-center md:justify-start gap-4 text-brandOrange font-bold text-sm md:text-base">
+<span class="hidden md:block h-[2px] w-12 bg-brandOrange"></span> TOP QUALITY FINISHING
+</div>
+</div>
+<div class="flex justify-center group px-4">
+<div class="relative w-full max-w-sm md:max-w-md">
+<div class="absolute -inset-4 bg-brandOrange/5 rounded-3xl blur-2xl group-hover:bg-brandOrange/20 transition-all duration-700"></div>
+<img src="assets/images/logo/PRINT MARKing card.jpg" alt="Print Marking Card" class="relative rounded-2xl shadow-xl w-full h-auto transform group-hover:scale-[1.02] transition-transform duration-500">
+</div>
+</div>
+</div>
+</section>
+
+<section class="py-24 text-center">
+<div class="max-w-4xl mx-auto px-6">
+<h2 class="text-4xl md:text-6xl font-black mb-8">Ready to Elevate <br> Your Brand?</h2>
+<a href="contact.html" class="bg-black text-white px-10 md:px-14 py-5 md:py-6 rounded-full font-black text-lg md:text-xl hover:bg-brandOrange transition-all shadow-2xl inline-block uppercase">
+Get In Touch
+</a>
+</div>
+</section>
+
+<footer class="bg-white py-12 text-center text-gray-400 text-sm border-t border-black/5 uppercase tracking-widest">
 © 2026 Print Marking. Quality Redefined.
 </footer>
+</div>
 
+<script>
+const heroLogo = document.getElementById('hero-logo-main');
+const heroTrigger = document.getElementById('hero-logo-trigger');
+
+heroTrigger.addEventListener('mousemove', (e) => {
+if (window.innerWidth < 768) return; 
+const rect = heroTrigger.getBoundingClientRect();
+const x = e.clientX - rect.left;
+const y = e.clientY - rect.top;
+const centerX = rect.width / 2;
+const centerY = rect.height / 2;
+const rotateX = (y - centerY) / 15;
+const rotateY = (centerX - x) / 15;
+heroLogo.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+heroLogo.style.filter = `drop-shadow(${(centerX - x)/5}px ${(centerY - y)/5}px 40px rgba(246, 139, 44, 0.8))`;
+});
+
+heroTrigger.addEventListener('mouseleave', () => {
+heroLogo.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+heroLogo.style.filter = `drop-shadow(0 0 30px rgba(246, 139, 44, 0.3))`;
+});
+
+const menuBtn = document.getElementById('menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+const menuPath = document.getElementById('menu-path');
+const body = document.body;
+
+menuBtn.addEventListener('click', () => {
+mobileMenu.classList.toggle('active');
+body.classList.toggle('menu-open'); 
+const isActive = mobileMenu.classList.contains('active');
+menuPath.setAttribute('d', isActive ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16');
+body.style.overflow = isActive ? 'hidden' : 'auto';
+});
+
+const mobileLinks = mobileMenu.querySelectorAll('a');
+mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+        body.classList.remove('menu-open');
+        menuPath.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+        body.style.overflow = 'auto';
+    });
+});
+
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+const mouse = { x: null, y: null };
+window.addEventListener('mousemove', (e) => { mouse.x = e.x; mouse.y = e.y; });
+
+class Particle {
+constructor() { this.reset(); }
+reset() {
+this.x = Math.random() * canvas.width;
+this.y = Math.random() * canvas.height;
+this.size = Math.random() * 2 + 1.5; // Slightly larger for brightness
+this.speedX = (Math.random() - 0.5) * 0.5;
+this.speedY = (Math.random() - 0.5) * 0.5;
+}
+update() {
+this.x += this.speedX; this.y += this.speedY;
+if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+let dx = mouse.x - this.x; let dy = mouse.y - this.y;
+let dist = Math.sqrt(dx*dx + dy*dy);
+if(dist < 120) { this.x -= dx/20; this.y -= dy/20; }
+}
+draw() {
+ctx.fillStyle = 'rgba(246, 139, 44, 0.9)'; // INCREASED OPACITY (Brighter)
+ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+}
+}
+
+function init() {
+canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+particles = [];
+let count = window.innerWidth < 768 ? 40 : 120; // Increased count for brightness
+for (let i = 0; i < count; i++) { particles.push(new Particle()); }
+}
+
+function connect() {
+for (let a = 0; a < particles.length; a++) {
+for (let b = a; b < particles.length; b++) {
+let dx = particles[a].x - particles[b].x;
+let dy = particles[a].y - particles[b].y;
+let distance = Math.sqrt(dx*dx + dy*dy);
+if (distance < 150) {
+let opacity = 1 - (distance / 150);
+ctx.strokeStyle = `rgba(246, 139, 44, ${opacity * 0.5})`; // INCREASED LINE OPACITY
+ctx.lineWidth = 1; ctx.beginPath();
+ctx.moveTo(particles[a].x, particles[a].y);
+ctx.lineTo(particles[b].x, particles[b].y); ctx.stroke();
+}
+}
+}
+}
+
+function animate() {
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+particles.forEach(p => { p.update(); p.draw(); });
+connect(); requestAnimationFrame(animate);
+}
+
+window.addEventListener('resize', init);
+init(); animate();
+</script>
 </body>
 </html>
