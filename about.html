@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <title>About | Print Marking</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+    
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background-color: #FFFFFF; color: #1C1C1C; }
+
+    /* --- MOBILE MENU & BLUR FIX --- */
+    #main-content-wrapper { transition: filter 0.4s ease, transform 0.4s ease; }
+    body.menu-open #main-content-wrapper { filter: blur(15px); transform: scale(0.95); }
+    
+    #mobile-menu {
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+      transform: translateY(-100%);
+      opacity: 0;
+      visibility: hidden;
+      padding-top: 80px; 
+    }
+    #mobile-menu.active {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Premium Image Interaction */
+    .card-glow-effect {
+      transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+    .card-glow-effect:hover {
+      transform: translateY(-15px);
+      box-shadow: 0 30px 60px rgba(246, 139, 44, 0.2);
+    }
+
+    /* New Architectural Heading Styles */
+    .expertise-title {
+      line-height: 0.9;
+      letter-spacing: -0.05em;
+    }
+
+    .liquid-accent {
+      color: #F68B2C;
+      position: relative;
+      display: inline-block;
+    }
+
+    @keyframes pulse-border {
+      0% { border-color: rgba(246, 139, 44, 0.1); }
+      50% { border-color: rgba(246, 139, 44, 0.5); }
+      100% { border-color: rgba(246, 139, 44, 0.1); }
+    }
+    .pulse-line {
+      animation: pulse-border 3s infinite;
+    }
+
+    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandOrange: '#F68B2C',
+            brandGray: '#F9F9F9',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-white text-black overflow-x-hidden antialiased">
+
+<nav class="fixed top-0 w-full bg-white/80 backdrop-blur-md z-[300] border-b border-black/5">
+  <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center relative z-[310]">
+    <a href="index.html" class="flex items-center gap-3 group">
+      <img src="assets/images/logo/PRINT MARKING LOGO.png" alt="Logo" class="h-10 w-auto transition-transform duration-500 group-hover:rotate-[360deg]">
+      <span class="text-xl font-bold tracking-tight">PRINT <span class="text-brandOrange">MARKING</span></span>
+    </a>
+    <div class="hidden md:flex gap-8 text-sm uppercase tracking-widest font-bold">
+      <a href="index.html" class="hover:text-brandOrange transition-colors">Home</a>
+      <a href="about.html" class="text-brandOrange">About</a>
+      <a href="gallery.html" class="hover:text-brandOrange transition-colors">Gallery</a>
+      <a href="contact.html" class="hover:text-brandOrange transition-colors">Contact</a>
+    </div>
+    <button id="menu-btn" class="md:hidden text-black focus:outline-none p-2 relative z-[320]">
+      <svg id="menu-icon" class="w-8 h-8 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path id="menu-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+  </div>
+  <div id="mobile-menu" class="fixed inset-0 bg-white/95 backdrop-blur-3xl z-[250] flex flex-col items-center justify-start pt-32 gap-10 md:hidden">
+    <a href="index.html" class="text-3xl font-black hover:text-brandOrange uppercase tracking-widest transition-colors">Home</a>
+    <a href="about.html" class="text-3xl font-black text-brandOrange uppercase tracking-widest">About</a>
+    <a href="gallery.html" class="text-3xl font-black hover:text-brandOrange uppercase tracking-widest transition-colors">Gallery</a>
+    <a href="contact.html" class="text-3xl font-black hover:text-brandOrange uppercase tracking-widest transition-colors">Contact</a>
+  </div>
+</nav>
+
+<div id="main-content-wrapper">
+<section class="pt-48 pb-16">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex items-center gap-4 mb-8">
+      <span class="bg-brandOrange/10 text-brandOrange font-bold tracking-widest uppercase text-[10px] px-4 py-2 rounded-full border border-brandOrange/20">
+        Our Journey Since 2016
+      </span>
+      <div class="h-[1px] flex-1 bg-black/5"></div>
+    </div>
+    
+    <div class="flex flex-col md:flex-row md:items-end gap-8">
+      <div class="border-l-8 border-brandOrange pl-6 md:pl-10">
+        <h1 class="expertise-title text-6xl md:text-9xl font-black uppercase">
+          THE MARK OF<br><span class="liquid-accent">EXCELLENCE.</span>
+        </h1>
+      </div>
+      <p class="max-w-md text-gray-900 text-lg leading-relaxed font-semibold pb-2">
+        We don't just print; we <span class="text-brandOrange">architect brand identities</span>. We've been the silent force behind India's biggest corporate gifts.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="pb-32">
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-start">
+    <div class="space-y-8">
+      <div class="space-y-4">
+        <h2 class="text-4xl font-black text-black uppercase tracking-tight">Crafting Legacies</h2>
+        <div class="h-1.5 w-20 bg-brandOrange"></div>
+      </div>
+      
+      <div class="space-y-6 text-gray-900 text-lg leading-relaxed font-medium">
+        <p>
+          Print Marking is a trusted provider of corporate gifting and customized printing solutions, helping businesses communicate their brand with clarity and impact. We specialize in delivering high-quality printed and promotional products that combine creative design, premium materials, and precise execution.
+        </p>
+        <p>
+          With a strong focus on consistency, durability, and timely delivery, we tailor every solution to meet our clients’ unique branding needs. At Print Marking, we believe effective branding goes beyond printing — it’s about creating a lasting impression through reliability, attention to detail, and professional excellence.
+        </p>
+      </div>
+
+      <div class="bg-brandGray p-8 rounded-3xl border-l-4 border-brandOrange">
+        <p class="text-brandOrange font-black italic text-2xl">
+          "Because great brands deserve to be seen, remembered, and trusted."
+        </p>
+      </div>
+      
+      <div class="flex gap-12 pt-4">
+        <div class="reveal">
+          <span class="text-5xl font-black text-black block">10+</span>
+          <span class="text-xs uppercase font-bold tracking-widest text-gray-400">Years Exp</span>
+        </div>
+        <div class="w-[1px] h-14 bg-black/10"></div>
+        <div class="reveal">
+          <span class="text-5xl font-black text-black block">1000+</span>
+          <span class="text-xs uppercase font-bold tracking-widest text-gray-400">Clients</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="relative mt-10 md:mt-0 reveal">
+      <div class="absolute -inset-4 border-2 border-brandOrange/10 rounded-2xl pulse-line"></div>
+      <img src="assets/images/logo/PRINT MARKing card.jpg" 
+           alt="Print Marking Business Card" 
+           class="relative rounded-xl w-full h-auto card-glow-effect">
+    </div>
+  </div>
+</section>
+
+<footer class="bg-white py-12 text-center text-gray-400 text-sm border-t border-black/5 uppercase tracking-widest">
+  © 2026 Print Marking. Quality Redefined.
+</footer>
+</div>
+
+<script>
+  // Mobile Menu Logic
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuPath = document.getElementById('menu-path');
+  const body = document.body;
+
+  menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('active');
+    body.classList.toggle('menu-open'); 
+    const isActive = mobileMenu.classList.contains('active');
+    menuPath.setAttribute('d', isActive ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16');
+    body.style.overflow = isActive ? 'hidden' : 'auto';
+  });
+
+  // Reveal animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('active');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

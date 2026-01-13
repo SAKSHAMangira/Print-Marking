@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Products & Showcase | Print Marking</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+    
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background-color: #FFFFFF; color: #1C1C1C; }
+
+    /* --- MOBILE MENU & BLUR FIX --- */
+    #main-content-wrapper { transition: filter 0.4s ease, transform 0.4s ease; }
+    body.menu-open #main-content-wrapper { filter: blur(15px); transform: scale(0.95); }
+    #mobile-menu {
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+      transform: translateY(-100%); opacity: 0; visibility: hidden; padding-top: 80px; 
+    }
+    #mobile-menu.active { transform: translateY(0); opacity: 1; visibility: visible; }
+
+    /* --- PREMIUM PRODUCT CARDS --- */
+    .product-card {
+      background: #FFFFFF;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .card-content-overlay {
+      transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      transform: translateY(20px);
+    }
+
+    .product-card:hover {
+      border-color: #F68B2C;
+      box-shadow: 0 25px 50px -12px rgba(246, 139, 44, 0.15);
+    }
+
+    .product-card:hover .card-content-overlay {
+      transform: translateY(0);
+    }
+
+    /* Expertise Title Style */
+    .expertise-title {
+      line-height: 0.9;
+      letter-spacing: -0.05em;
+    }
+
+    .liquid-accent {
+      color: #F68B2C;
+      position: relative;
+      display: inline-block;
+    }
+
+    /* Reveal animations */
+    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    /* Custom Swiper */
+    .nav-btn {
+      background: white !important;
+      width: 40px !important; height: 40px !important;
+      border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .nav-btn:after { font-size: 16px !important; color: #F68B2C; font-weight: 900; }
+  </style>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { brandOrange: '#F68B2C' }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="overflow-x-hidden">
+
+<nav class="fixed top-0 w-full bg-white/80 backdrop-blur-md z-[300] border-b border-black/5">
+  <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center relative z-[310]">
+    <a href="index.html" class="flex items-center gap-3 group">
+      <img src="assets/images/logo/PRINT MARKING LOGO.png" alt="Logo" class="h-10 w-auto transition-transform duration-500 group-hover:rotate-[360deg]">
+      <span class="text-xl font-bold tracking-tight">PRINT <span class="text-brandOrange">MARKING</span></span>
+    </a>
+    <div class="hidden md:flex gap-8 text-sm uppercase tracking-widest font-bold">
+      <a href="index.html" class="hover:text-brandOrange transition-colors">Home</a>
+      <a href="about.html" class="hover:text-brandOrange transition-colors">About</a>
+      <a href="gallery.html" class="text-brandOrange">Gallery</a>
+      <a href="contact.html" class="hover:text-brandOrange transition-colors">Contact</a>
+    </div>
+    <button id="menu-btn" class="md:hidden text-black focus:outline-none p-2 relative z-[320]">
+      <svg id="menu-icon" class="w-8 h-8 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path id="menu-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+  </div>
+  <div id="mobile-menu" class="fixed inset-0 bg-white/90 backdrop-blur-3xl z-[250] flex flex-col items-center justify-start pt-32 gap-10 md:hidden">
+    <a href="index.html" class="text-3xl font-black hover:text-brandOrange uppercase tracking-widest">Home</a>
+    <a href="about.html" class="text-3xl font-black hover:text-brandOrange uppercase tracking-widest">About</a>
+    <a href="gallery.html" class="text-3xl font-black text-brandOrange uppercase tracking-widest">Gallery</a>
+    <a href="contact.html" class="text-3xl font-black hover:text-brandOrange uppercase tracking-widest">Contact</a>
+  </div>
+</nav>
+
+<div id="main-content-wrapper">
+<section class="pt-48 pb-16">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex items-center gap-4 mb-8">
+      <span class="bg-brandOrange/10 text-brandOrange font-bold tracking-widest uppercase text-[10px] px-4 py-2 rounded-full border border-brandOrange/20">
+        Our Collection 2026
+      </span>
+      <div class="h-[1px] flex-1 bg-black/5"></div>
+    </div>
+    
+    <div class="flex flex-col md:flex-row md:items-end gap-8">
+      <div class="border-l-8 border-brandOrange pl-6 md:pl-10">
+        <h1 class="expertise-title text-7xl md:text-9xl font-black uppercase">
+          OUR<br><span class="liquid-accent">EXPERTISE.</span>
+        </h1>
+      </div>
+      <p class="max-w-md text-gray-900 text-lg leading-relaxed font-semibold pb-2">
+        We provide <span class="text-brandOrange">scalable corporate gifting</span> for businesses that demand high consistency and professional branding standards.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="pb-32 relative z-10">
+  <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+
+    <div class="product-card reveal group">
+      <div class="swiper itemSwiper h-[400px]">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="assets/images/pens/pen-1.jpg" class="w-full h-full object-cover"></div>
+          <div class="swiper-slide"><img src="assets/images/pens/pen-2.jpg" class="w-full h-full object-cover"></div>
+        </div>
+        <div class="swiper-button-next nav-btn"></div>
+        <div class="swiper-button-prev nav-btn"></div>
+      </div>
+      <div class="p-8 card-content-overlay">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-2xl font-black uppercase tracking-tighter">Metallic Pens</h3>
+          <div class="w-8 h-8 rounded-full border border-black/10 flex items-center justify-center group-hover:bg-brandOrange group-hover:border-brandOrange transition-all">
+            <svg class="w-4 h-4 text-black group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <p class="text-gray-900 font-medium text-sm mb-6 opacity-70 group-hover:opacity-100 transition-opacity">Precision laser marking on anodized surfaces. Perfect for executive gifting and high-volume corporate branding.</p>
+        <a href="contact.html" class="block w-full bg-black text-white text-center py-4 rounded-xl font-black uppercase text-xs tracking-[0.2em] hover:bg-brandOrange transition-colors">Start Bulk Order</a>
+      </div>
+    </div>
+
+    <div class="product-card reveal group">
+      <div class="swiper itemSwiper h-[400px]">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="assets/images/pens/pen-5.jpg" class="w-full h-full object-cover"></div>
+          <div class="swiper-slide"><img src="assets/images/pens/pen-6.jpg" class="w-full h-full object-cover"></div>
+        </div>
+        <div class="swiper-button-next nav-btn"></div>
+        <div class="swiper-button-prev nav-btn"></div>
+      </div>
+      <div class="p-8 card-content-overlay">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-2xl font-black uppercase tracking-tighter">Executive Sets</h3>
+          <div class="w-8 h-8 rounded-full border border-black/10 flex items-center justify-center group-hover:bg-brandOrange group-hover:border-brandOrange transition-all">
+            <svg class="w-4 h-4 text-black group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <p class="text-gray-900 font-medium text-sm mb-6 opacity-70 group-hover:opacity-100 transition-opacity">Premium ball-point and roller-ball collections presented in luxury velvet-lined cases for top-tier clients.</p>
+        <a href="contact.html" class="block w-full bg-black text-white text-center py-4 rounded-xl font-black uppercase text-xs tracking-[0.2em] hover:bg-brandOrange transition-colors">Request Quote</a>
+      </div>
+    </div>
+
+    <div class="product-card reveal group">
+      <div class="swiper itemSwiper h-[400px]">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide"><img src="assets/images/pens/pen-8.jpg" class="w-full h-full object-cover"></div>
+          <div class="swiper-slide"><img src="assets/images/pens/pen-9.jpg" class="w-full h-full object-cover"></div>
+        </div>
+        <div class="swiper-button-next nav-btn"></div>
+        <div class="swiper-button-prev nav-btn"></div>
+      </div>
+      <div class="p-8 card-content-overlay">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-2xl font-black uppercase tracking-tighter">Corporate Kits</h3>
+          <div class="w-8 h-8 rounded-full border border-black/10 flex items-center justify-center group-hover:bg-brandOrange group-hover:border-brandOrange transition-all">
+            <svg class="w-4 h-4 text-black group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <p class="text-gray-900 font-medium text-sm mb-6 opacity-70 group-hover:opacity-100 transition-opacity">Complete onboarding kits for employees. Includes customized notebooks, pens, and professional gear.</p>
+        <a href="contact.html" class="block w-full bg-black text-white text-center py-4 rounded-xl font-black uppercase text-xs tracking-[0.2em] hover:bg-brandOrange transition-colors">Design Kit</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer class="bg-white py-12 text-center text-gray-400 text-sm border-t border-black/5 uppercase tracking-widest">
+  © 2026 Print Marking. Quality Redefined.
+</footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+  // Mobile Menu Logic
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuPath = document.getElementById('menu-path');
+  const body = document.body;
+
+  menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('active');
+    body.classList.toggle('menu-open'); 
+    const isActive = mobileMenu.classList.contains('active');
+    menuPath.setAttribute('d', isActive ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16');
+    body.style.overflow = isActive ? 'hidden' : 'auto';
+  });
+
+  // Swiper Carousel Initialization
+  const swipers = new Swiper(".itemSwiper", {
+    loop: true, 
+    speed: 800,
+    autoplay: { delay: 4000 },
+    navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+  });
+
+  // Intersection Observer for Reveal Animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

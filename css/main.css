@@ -1,0 +1,24 @@
+/* LOGO GLOW */
+.logo-glow {
+  padding: 3rem;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(246,139,44,0.25), transparent 70%);
+}
+
+/* TRUST CARDS */
+.trust-card {
+  background: #1c1c1c;
+  padding: 3rem 2rem;
+  border-radius: 1.2rem;
+}
+
+.trust-card h3 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #F68B2C;
+  margin-bottom: 0.5rem;
+}
+
+.trust-card p {
+  color: #aaa;
+}
