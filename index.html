@@ -11,7 +11,7 @@
 <style>
 /* Custom Animations */
 @keyframes float {
-0%, 100% { transform: translateY(0px) rotate(0deg); }
+0%, 100__% { transform: translateY(0px) rotate(0deg); }
 50% { transform: translateY(-20px) rotate(1deg); }
 }
 
@@ -216,20 +216,27 @@ Contact Us
 
 <div class="conveyor-belt">
 <div class="product-item"><img src="pens/pen-1.jpg" alt="Pen"></div>
-<div class="product-item"><img src="pens/pen-2.jpg" alt="Pen"></div>
-<div class="product-item"><img src="pens/pen-3.jpg" alt="Pen"></div>
-<div class="product-item"><img src="pens/pen-4.jpg" alt="Pen"></div>
-<div class="product-item"><img src="pens/pen-5.jpg" alt="Pen"></div>
-<div class="product-item"><img src="pens/pen-6.jpg" alt="Pen"></div>
-<div class="product-item"><img src="pens/pen-7.jpg" alt="Pen"></div>
-<div class="product-item"><img src="pens/pen-8.jpg" alt="Pen"></div>
-<div class="product-item"><img src="pens/pen-9.jpg" alt="Pen"></div>
+<div class="product-item"><img src="bottle/h161.jpg" alt="Bottle"></div>
+<div class="product-item"><img src="notebook/b105.jpg" alt="Notebook"></div>
+<div class="product-item"><img src="charger/c215.jpg" alt="Charger"></div>
+<div class="product-item"><img src="mobile stand/e319.jpg" alt="Stand"></div>
+<div class="product-item"><img src="metal key ring/j116.jpg" alt="Keyring"></div>
 <div class="product-item"><img src="pens/pen-10.jpg" alt="Pen"></div>
+<div class="product-item"><img src="leptop stand/c159-1.jpg" alt="Laptop Stand"></div>
+<div class="product-item"><img src="pendrive/download.jpg" alt="Pendrive"></div>
+<div class="product-item"><img src="bottle/h299.jpg" alt="Bottle"></div>
+<div class="product-item"><img src="notebook/q124.jpg" alt="Notebook"></div>
 <div class="product-item"><img src="pens/pen-1.jpg" alt="Pen"></div>
-<div class="product-item"><img src="pens/pen-2.jpg" alt="Pen"></div>
-<div class="product-item"><img src="pens/pen-3.jpg" alt="Pen"></div>
-<div class="product-item"><img src="pens/pen-4.jpg" alt="Pen"></div>
-<div class="product-item"><img src="pens/pen-5.jpg" alt="Pen"></div>
+<div class="product-item"><img src="bottle/h161.jpg" alt="Bottle"></div>
+<div class="product-item"><img src="notebook/b105.jpg" alt="Notebook"></div>
+<div class="product-item"><img src="charger/c215.jpg" alt="Charger"></div>
+<div class="product-item"><img src="mobile stand/e319.jpg" alt="Stand"></div>
+<div class="product-item"><img src="metal key ring/j116.jpg" alt="Keyring"></div>
+<div class="product-item"><img src="pens/pen-10.jpg" alt="Pen"></div>
+<div class="product-item"><img src="leptop stand/c159-1.jpg" alt="Laptop Stand"></div>
+<div class="product-item"><img src="pendrive/download.jpg" alt="Pendrive"></div>
+<div class="product-item"><img src="bottle/h299.jpg" alt="Bottle"></div>
+<div class="product-item"><img src="notebook/q124.jpg" alt="Notebook"></div>
 </div>
 </section>
 
@@ -340,7 +347,7 @@ constructor() { this.reset(); }
 reset() {
 this.x = Math.random() * canvas.width;
 this.y = Math.random() * canvas.height;
-this.size = Math.random() * 2 + 1.5; // Slightly larger for brightness
+this.size = Math.random() * 2 + 1.5;
 this.speedX = (Math.random() - 0.5) * 0.5;
 this.speedY = (Math.random() - 0.5) * 0.5;
 }
@@ -353,7 +360,7 @@ let dist = Math.sqrt(dx*dx + dy*dy);
 if(dist < 120) { this.x -= dx/20; this.y -= dy/20; }
 }
 draw() {
-ctx.fillStyle = 'rgba(246, 139, 44, 0.9)'; // INCREASED OPACITY (Brighter)
+ctx.fillStyle = 'rgba(246, 139, 44, 0.9)';
 ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
 }
 }
@@ -361,7 +368,7 @@ ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
 function init() {
 canvas.width = window.innerWidth; canvas.height = window.innerHeight;
 particles = [];
-let count = window.innerWidth < 768 ? 40 : 120; // Increased count for brightness
+let count = window.innerWidth < 768 ? 40 : 120;
 for (let i = 0; i < count; i++) { particles.push(new Particle()); }
 }
 
@@ -373,7 +380,7 @@ let dy = particles[a].y - particles[b].y;
 let distance = Math.sqrt(dx*dx + dy*dy);
 if (distance < 150) {
 let opacity = 1 - (distance / 150);
-ctx.strokeStyle = `rgba(246, 139, 44, ${opacity * 0.5})`; // INCREASED LINE OPACITY
+ctx.strokeStyle = `rgba(246, 139, 44, ${opacity * 0.5})`;
 ctx.lineWidth = 1; ctx.beginPath();
 ctx.moveTo(particles[a].x, particles[a].y);
 ctx.lineTo(particles[b].x, particles[b].y); ctx.stroke();
