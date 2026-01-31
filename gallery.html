@@ -10,60 +10,72 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Inter:wght@400;700;900&display=swap');
     
     html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background-color: #FFFFFF; color: #1C1C1C; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #FFFFFF; color: #1C1C1C; }
 
-    #main-content-wrapper { transition: filter 0.4s ease, transform 0.4s ease; }
-    body.menu-open #main-content-wrapper { filter: blur(15px); transform: scale(0.95); }
+    /* Glassmorphism Background */
+    .bg-mesh {
+      background-color: #ffffff;
+      background-image: radial-gradient(at 0% 0%, rgba(246, 139, 44, 0.05) 0px, transparent 50%),
+                        radial-gradient(at 100% 100%, rgba(246, 139, 44, 0.05) 0px, transparent 50%);
+    }
+
+    #main-content-wrapper { transition: filter 0.5s ease, transform 0.5s ease; }
+    body.menu-open #main-content-wrapper { filter: blur(20px); transform: scale(0.98); }
+    
     #mobile-menu {
-      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
-      transform: translateY(-100%); opacity: 0; visibility: hidden; padding-top: 80px; 
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateY(-100%); opacity: 0; visibility: hidden;
     }
     #mobile-menu.active { transform: translateY(0); opacity: 1; visibility: visible; }
 
+    /* Refined Product Cards */
     .product-card {
       background: #FFFFFF;
-      border: 1px solid rgba(0, 0, 0, 0.05);
-      border-radius: 24px;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      border-radius: 32px;
       overflow: hidden;
-      position: relative;
-      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-    }
-
-    .card-content-overlay {
-      transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-      transform: translateY(20px);
+      transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
     }
 
     .product-card:hover {
-      border-color: #F68B2C;
-      box-shadow: 0 25px 50px -12px rgba(246, 139, 44, 0.15);
+      transform: translateY(-12px);
+      border-color: rgba(246, 139, 44, 0.4);
+      box-shadow: 0 40px 80px -20px rgba(246, 139, 44, 0.15);
     }
 
-    .product-card:hover .card-content-overlay { transform: translateY(0); }
+    .swiper-img-container {
+      transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .product-card:hover .swiper-img-container { transform: scale(1.05); }
 
-    .expertise-title { line-height: 0.9; letter-spacing: -0.05em; }
+    .expertise-title { line-height: 0.85; letter-spacing: -0.06em; font-family: 'Inter', sans-serif; }
 
-    .liquid-accent { color: #F68B2C; position: relative; display: inline-block; }
+    .liquid-accent { 
+      color: #F68B2C; 
+      position: relative; 
+      display: inline-block;
+      text-shadow: 0 10px 20px rgba(246, 139, 44, 0.2);
+    }
 
-    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+    .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.23, 1, 0.32, 1); }
     .reveal.active { opacity: 1; transform: translateY(0); }
 
+    /* Swiper Navigation Customization */
     .nav-btn {
       background: white !important;
-      width: 40px !important; height: 40px !important;
-      border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      z-index: 20;
+      width: 44px !important; height: 44px !important;
+      border-radius: 50%; box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      z-index: 20; opacity: 0; transition: all 0.3s ease;
     }
-    .nav-btn:after { font-size: 16px !important; color: #F68B2C; font-weight: 900; }
+    .product-card:hover .nav-btn { opacity: 1; }
+    .nav-btn:after { font-size: 14px !important; color: #F68B2C; font-weight: 900; }
     
     .swiper-slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      padding: 20px;
+      width: 100%; height: 100%;
+      object-fit: contain; padding: 30px;
     }
   </style>
 
@@ -78,63 +90,63 @@
   </script>
 </head>
 
-<body class="overflow-x-hidden">
+<body class="overflow-x-hidden bg-mesh">
 
-<nav class="fixed top-0 w-full bg-white/80 backdrop-blur-md z-[300] border-b border-black/5">
+<nav class="fixed top-0 w-full bg-white/70 backdrop-blur-xl z-[300] border-b border-black/5">
   <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center relative z-[310]">
     <a href="index.html" class="flex items-center gap-3 group">
-      <img src="logo/PRINT MARKING LOGO.png" alt="Logo" class="h-10 w-auto transition-transform duration-500 group-hover:rotate-[360deg]">
-      <span class="text-xl font-bold tracking-tight">PRINT <span class="text-brandOrange">MARKING</span></span>
+      <img src="logo/PRINT MARKING LOGO.png" alt="Logo" class="h-10 w-auto transition-transform duration-700 group-hover:rotate-[360deg]">
+      <span class="text-xl font-black tracking-tight uppercase">PRINT <span class="text-brandOrange">MARKING</span></span>
     </a>
-    <div class="hidden md:flex gap-8 text-sm uppercase tracking-widest font-bold">
+    <div class="hidden md:flex gap-10 text-xs uppercase tracking-[0.2em] font-extrabold">
       <a href="index.html" class="hover:text-brandOrange transition-colors">Home</a>
       <a href="about.html" class="hover:text-brandOrange transition-colors">About</a>
-      <a href="gallery.html" class="text-brandOrange">Gallery</a>
+      <a href="gallery.html" class="text-brandOrange underline underline-offset-8 decoration-2">Gallery</a>
       <a href="contact.html" class="hover:text-brandOrange transition-colors">Contact</a>
     </div>
-    <button id="menu-btn" class="md:hidden text-black focus:outline-none p-2 relative z-[320]">
-      <svg id="menu-icon" class="w-8 h-8 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <button id="menu-btn" class="md:hidden text-black p-2 relative z-[320]">
+      <svg id="menu-icon" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path id="menu-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
       </svg>
     </button>
   </div>
-  <div id="mobile-menu" class="fixed inset-0 bg-white/90 backdrop-blur-3xl z-[250] flex flex-col items-center justify-start pt-32 gap-10 md:hidden">
-    <a href="index.html" class="text-3xl font-black hover:text-brandOrange uppercase tracking-widest">Home</a>
-    <a href="about.html" class="text-3xl font-black hover:text-brandOrange uppercase tracking-widest">About</a>
-    <a href="gallery.html" class="text-3xl font-black text-brandOrange uppercase tracking-widest">Gallery</a>
-    <a href="contact.html" class="text-3xl font-black hover:text-brandOrange uppercase tracking-widest">Contact</a>
+  <div id="mobile-menu" class="fixed inset-0 bg-white z-[250] flex flex-col items-center justify-center gap-8 md:hidden">
+    <a href="index.html" class="text-4xl font-black hover:text-brandOrange uppercase">Home</a>
+    <a href="about.html" class="text-4xl font-black hover:text-brandOrange uppercase">About</a>
+    <a href="gallery.html" class="text-4xl font-black text-brandOrange uppercase">Gallery</a>
+    <a href="contact.html" class="text-4xl font-black hover:text-brandOrange uppercase">Contact</a>
   </div>
 </nav>
 
 <div id="main-content-wrapper">
-<section class="pt-48 pb-16">
+<section class="pt-40 md:pt-56 pb-20">
   <div class="max-w-7xl mx-auto px-6">
-    <div class="flex items-center gap-4 mb-8">
-      <span class="bg-brandOrange/10 text-brandOrange font-bold tracking-widest uppercase text-[10px] px-4 py-2 rounded-full border border-brandOrange/20">
-        Our Collection 2026
+    <div class="flex items-center gap-6 mb-12">
+      <span class="bg-black text-white font-bold tracking-[0.3em] uppercase text-[9px] px-5 py-2.5 rounded-full">
+        Portfolio 2026
       </span>
-      <div class="h-[1px] flex-1 bg-black/5"></div>
+      <div class="h-[1px] flex-1 bg-black/10"></div>
     </div>
     
-    <div class="flex flex-col md:flex-row md:items-end gap-8">
-      <div class="border-l-8 border-brandOrange pl-6 md:pl-10">
-        <h1 class="expertise-title text-7xl md:text-9xl font-black uppercase">
+    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-10">
+      <div class="max-w-4xl">
+        <h1 class="expertise-title text-6xl md:text-8xl lg:text-[10rem] font-black uppercase mb-4">
           OUR<br><span class="liquid-accent">EXPERTISE.</span>
         </h1>
       </div>
-      <p class="max-w-md text-gray-900 text-lg leading-relaxed font-semibold pb-2">
-        We provide <span class="text-brandOrange">scalable corporate gifting</span> for businesses that demand high consistency and professional branding standards.
+      <p class="max-w-sm text-gray-500 text-lg leading-relaxed font-medium border-l-2 border-brandOrange pl-6 mb-4">
+        Delivering <span class="text-black font-bold">bespoke branding</span> for industry leaders who prioritize precision and quality.
       </p>
     </div>
   </div>
 </section>
 
 <section class="pb-32 relative z-10">
-  <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+  <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
 
     <div class="product-card reveal group">
-      <div class="swiper itemSwiper h-[320px] bg-gray-50">
-        <div class="swiper-wrapper">
+      <div class="swiper itemSwiper h-[360px] bg-gray-50/50">
+        <div class="swiper-wrapper swiper-img-container">
           <div class="swiper-slide"><img src="bottle/h161.jpg"></div>
           <div class="swiper-slide"><img src="bottle/h232-1.jpg"></div>
           <div class="swiper-slide"><img src="bottle/h299.jpg"></div>
@@ -142,16 +154,16 @@
         <div class="swiper-button-next nav-btn"></div>
         <div class="swiper-button-prev nav-btn"></div>
       </div>
-      <div class="p-8 card-content-overlay">
-        <h3 class="text-2xl font-black uppercase tracking-tighter mb-2">Bottles</h3>
-        <p class="text-gray-900 font-medium text-sm mb-6 opacity-70 group-hover:opacity-100 transition-opacity">Premium insulated stainless steel bottles with permanent high-fidelity engraving.</p>
-        <a href="contact.html" class="block w-full bg-black text-white text-center py-4 rounded-xl font-black uppercase text-xs tracking-[0.2em] hover:bg-brandOrange transition-colors">Order Now</a>
+      <div class="p-10">
+        <h3 class="text-2xl font-black uppercase tracking-tight mb-3">Bottles</h3>
+        <p class="text-gray-500 text-sm leading-relaxed mb-8">Premium insulated stainless steel bottles with permanent high-fidelity engraving.</p>
+        <a href="contact.html" class="flex items-center justify-center w-full bg-black text-white py-4 rounded-2xl font-bold uppercase text-xs tracking-widest hover:bg-brandOrange transition-all">Order Now</a>
       </div>
     </div>
 
     <div class="product-card reveal group">
-      <div class="swiper itemSwiper h-[320px] bg-gray-50">
-        <div class="swiper-wrapper">
+      <div class="swiper itemSwiper h-[360px] bg-gray-50/50">
+        <div class="swiper-wrapper swiper-img-container">
           <div class="swiper-slide"><img src="notebook/b105.jpg"></div>
           <div class="swiper-slide"><img src="notebook/b130-1.jpg"></div>
           <div class="swiper-slide"><img src="notebook/q124.jpg"></div>
@@ -159,32 +171,32 @@
         <div class="swiper-button-next nav-btn"></div>
         <div class="swiper-button-prev nav-btn"></div>
       </div>
-      <div class="p-8 card-content-overlay">
-        <h3 class="text-2xl font-black uppercase tracking-tighter mb-2">Notebooks</h3>
-        <p class="text-gray-900 font-medium text-sm mb-6 opacity-70 group-hover:opacity-100 transition-opacity">Customized diary and journal sets with premium textured covers and foil stamping.</p>
-        <a href="contact.html" class="block w-full bg-black text-white text-center py-4 rounded-xl font-black uppercase text-xs tracking-[0.2em] hover:bg-brandOrange transition-colors">Customize</a>
+      <div class="p-10">
+        <h3 class="text-2xl font-black uppercase tracking-tight mb-3">Notebooks</h3>
+        <p class="text-gray-500 text-sm leading-relaxed mb-8">Customized diary and journal sets with premium textured covers and foil stamping.</p>
+        <a href="contact.html" class="flex items-center justify-center w-full bg-black text-white py-4 rounded-2xl font-bold uppercase text-xs tracking-widest hover:bg-brandOrange transition-all">Customize</a>
       </div>
     </div>
 
     <div class="product-card reveal group">
-      <div class="swiper itemSwiper h-[320px] bg-gray-50">
-        <div class="swiper-wrapper">
+      <div class="swiper itemSwiper h-[360px] bg-gray-50/50">
+        <div class="swiper-wrapper swiper-img-container">
           <div class="swiper-slide"><img src="charger/c215.jpg"></div>
           <div class="swiper-slide"><img src="charger/e117.jpg"></div>
         </div>
         <div class="swiper-button-next nav-btn"></div>
         <div class="swiper-button-prev nav-btn"></div>
       </div>
-      <div class="p-8 card-content-overlay">
-        <h3 class="text-2xl font-black uppercase tracking-tighter mb-2">Smart Charging</h3>
-        <p class="text-gray-900 font-medium text-sm mb-6 opacity-70 group-hover:opacity-100 transition-opacity">High-speed adapters and power solutions with durable branded finishes.</p>
-        <a href="contact.html" class="block w-full bg-black text-white text-center py-4 rounded-xl font-black uppercase text-xs tracking-[0.2em] hover:bg-brandOrange transition-colors">Get Quote</a>
+      <div class="p-10">
+        <h3 class="text-2xl font-black uppercase tracking-tight mb-3">Smart Charging</h3>
+        <p class="text-gray-500 text-sm leading-relaxed mb-8">High-speed adapters and power solutions with durable branded finishes.</p>
+        <a href="contact.html" class="flex items-center justify-center w-full bg-black text-white py-4 rounded-2xl font-bold uppercase text-xs tracking-widest hover:bg-brandOrange transition-all">Get Quote</a>
       </div>
     </div>
 
     <div class="product-card reveal group">
-      <div class="swiper itemSwiper h-[320px] bg-gray-50">
-        <div class="swiper-wrapper">
+      <div class="swiper itemSwiper h-[360px] bg-gray-50/50">
+        <div class="swiper-wrapper swiper-img-container">
           <div class="swiper-slide"><img src="metal key ring/j116.jpg"></div>
           <div class="swiper-slide"><img src="metal key ring/j120-1.jpg"></div>
           <div class="swiper-slide"><img src="metal key ring/j123.jpg"></div>
@@ -192,82 +204,83 @@
         <div class="swiper-button-next nav-btn"></div>
         <div class="swiper-button-prev nav-btn"></div>
       </div>
-      <div class="p-8 card-content-overlay">
-        <h3 class="text-2xl font-black uppercase tracking-tighter mb-2">Metal Key Rings</h3>
-        <p class="text-gray-900 font-medium text-sm mb-6 opacity-70 group-hover:opacity-100 transition-opacity">Zinc alloy keychains with deep-etch engraving. Durable and elegant branding.</p>
-        <a href="contact.html" class="block w-full bg-black text-white text-center py-4 rounded-xl font-black uppercase text-xs tracking-[0.2em] hover:bg-brandOrange transition-colors">Inquire</a>
+      <div class="p-10">
+        <h3 class="text-2xl font-black uppercase tracking-tight mb-3">Metal Key Rings</h3>
+        <p class="text-gray-500 text-sm leading-relaxed mb-8">Zinc alloy keychains with deep-etch engraving. Durable and elegant branding.</p>
+        <a href="contact.html" class="flex items-center justify-center w-full bg-black text-white py-4 rounded-2xl font-bold uppercase text-xs tracking-widest hover:bg-brandOrange transition-all">Inquire</a>
       </div>
     </div>
 
     <div class="product-card reveal group">
-      <div class="swiper itemSwiper h-[320px] bg-gray-50">
-        <div class="swiper-wrapper">
+      <div class="swiper itemSwiper h-[360px] bg-gray-50/50">
+        <div class="swiper-wrapper swiper-img-container">
           <div class="swiper-slide"><img src="leptop stand/c159-1.jpg"></div>
           <div class="swiper-slide"><img src="leptop stand/e418.jpg"></div>
         </div>
         <div class="swiper-button-next nav-btn"></div>
         <div class="swiper-button-prev nav-btn"></div>
       </div>
-      <div class="p-8 card-content-overlay">
-        <h3 class="text-2xl font-black uppercase tracking-tighter mb-2">Laptop Stands</h3>
-        <p class="text-gray-900 font-medium text-sm mb-6 opacity-70 group-hover:opacity-100 transition-opacity">Ergonomic aluminum stands designed for modern workspace branding.</p>
-        <a href="contact.html" class="block w-full bg-black text-white text-center py-4 rounded-xl font-black uppercase text-xs tracking-[0.2em] hover:bg-brandOrange transition-colors">Details</a>
+      <div class="p-10">
+        <h3 class="text-2xl font-black uppercase tracking-tight mb-3">Laptop Stands</h3>
+        <p class="text-gray-500 text-sm leading-relaxed mb-8">Ergonomic aluminum stands designed for modern workspace branding.</p>
+        <a href="contact.html" class="flex items-center justify-center w-full bg-black text-white py-4 rounded-2xl font-bold uppercase text-xs tracking-widest hover:bg-brandOrange transition-all">Details</a>
       </div>
     </div>
 
     <div class="product-card reveal group">
-      <div class="swiper itemSwiper h-[320px] bg-gray-50">
-        <div class="swiper-wrapper">
+      <div class="swiper itemSwiper h-[360px] bg-gray-50/50">
+        <div class="swiper-wrapper swiper-img-container">
           <div class="swiper-slide"><img src="mobile stand/e319.jpg"></div>
           <div class="swiper-slide"><img src="mobile stand/e323-1.jpg"></div>
         </div>
         <div class="swiper-button-next nav-btn"></div>
         <div class="swiper-button-prev nav-btn"></div>
       </div>
-      <div class="p-8 card-content-overlay">
-        <h3 class="text-2xl font-black uppercase tracking-tighter mb-2">Mobile Stands</h3>
-        <p class="text-gray-900 font-medium text-sm mb-6 opacity-70 group-hover:opacity-100 transition-opacity">Compact desk accessories featuring precision laser-marked corporate logos.</p>
-        <a href="contact.html" class="block w-full bg-black text-white text-center py-4 rounded-xl font-black uppercase text-xs tracking-[0.2em] hover:bg-brandOrange transition-colors">Request</a>
+      <div class="p-10">
+        <h3 class="text-2xl font-black uppercase tracking-tight mb-3">Mobile Stands</h3>
+        <p class="text-gray-500 text-sm leading-relaxed mb-8">Compact desk accessories featuring precision laser-marked corporate logos.</p>
+        <a href="contact.html" class="flex items-center justify-center w-full bg-black text-white py-4 rounded-2xl font-bold uppercase text-xs tracking-widest hover:bg-brandOrange transition-all">Request</a>
       </div>
     </div>
 
     <div class="product-card reveal group">
-      <div class="swiper itemSwiper h-[320px] bg-gray-50">
-        <div class="swiper-wrapper">
+      <div class="swiper itemSwiper h-[360px] bg-gray-50/50">
+        <div class="swiper-wrapper swiper-img-container">
           <div class="swiper-slide"><img src="pendrive/download.jpg"></div>
           <div class="swiper-slide"><img src="pendrive/images (1).jpg"></div>
         </div>
         <div class="swiper-button-next nav-btn"></div>
         <div class="swiper-button-prev nav-btn"></div>
       </div>
-      <div class="p-8 card-content-overlay">
-        <h3 class="text-2xl font-black uppercase tracking-tighter mb-2">Flash Storage</h3>
-        <p class="text-gray-900 font-medium text-sm mb-6 opacity-70 group-hover:opacity-100 transition-opacity">Branded USB drives available in various professional styles.</p>
-        <a href="contact.html" class="block w-full bg-black text-white text-center py-4 rounded-xl font-black uppercase text-xs tracking-[0.2em] hover:bg-brandOrange transition-colors">Bulk Order</a>
+      <div class="p-10">
+        <h3 class="text-2xl font-black uppercase tracking-tight mb-3">Flash Storage</h3>
+        <p class="text-gray-500 text-sm leading-relaxed mb-8">Branded USB drives available in various professional styles.</p>
+        <a href="contact.html" class="flex items-center justify-center w-full bg-black text-white py-4 rounded-2xl font-bold uppercase text-xs tracking-widest hover:bg-brandOrange transition-all">Bulk Order</a>
       </div>
     </div>
 
     <div class="product-card reveal group">
-      <div class="swiper itemSwiper h-[320px] bg-gray-50">
-        <div class="swiper-wrapper">
+      <div class="swiper itemSwiper h-[360px] bg-gray-50/50">
+        <div class="swiper-wrapper swiper-img-container">
           <div class="swiper-slide"><img src="pens/pen-1.jpg"></div>
           <div class="swiper-slide"><img src="pens/pen-10.jpg"></div>
         </div>
         <div class="swiper-button-next nav-btn"></div>
         <div class="swiper-button-prev nav-btn"></div>
       </div>
-      <div class="p-8 card-content-overlay">
-        <h3 class="text-2xl font-black uppercase tracking-tighter mb-2">Metallic Pens</h3>
-        <p class="text-gray-900 font-medium text-sm mb-6 opacity-70 group-hover:opacity-100 transition-opacity">Our signature collection of laser-marked writing instruments.</p>
-        <a href="contact.html" class="block w-full bg-black text-white text-center py-4 rounded-xl font-black uppercase text-xs tracking-[0.2em] hover:bg-brandOrange transition-colors">Order</a>
+      <div class="p-10">
+        <h3 class="text-2xl font-black uppercase tracking-tight mb-3">Metallic Pens</h3>
+        <p class="text-gray-500 text-sm leading-relaxed mb-8">Our signature collection of laser-marked writing instruments.</p>
+        <a href="contact.html" class="flex items-center justify-center w-full bg-black text-white py-4 rounded-2xl font-bold uppercase text-xs tracking-widest hover:bg-brandOrange transition-all">Order</a>
       </div>
     </div>
 
   </div>
 </section>
 
-<footer class="bg-white py-12 text-center text-gray-400 text-sm border-t border-black/5 uppercase tracking-widest">
-  © 2026 Print Marking. Quality Redefined.
+<footer class="bg-white py-16 text-center border-t border-black/5">
+  <img src="logo/PRINT MARKING LOGO.png" class="h-8 mx-auto mb-6 opacity-50 grayscale hover:grayscale-0 transition-all cursor-pointer">
+  <p class="text-gray-400 text-[10px] uppercase tracking-[0.4em]">© 2026 Print Marking. Quality Redefined.</p>
 </footer>
 </div>
 
@@ -289,9 +302,11 @@
 
   const swipers = new Swiper(".itemSwiper", {
     loop: true, 
-    speed: 800,
-    autoplay: { delay: 4000 },
+    speed: 1000,
+    autoplay: { delay: 4000, disableOnInteraction: false },
     navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+    effect: 'fade',
+    fadeEffect: { crossFade: true }
   });
 
   const observer = new IntersectionObserver((entries) => {
